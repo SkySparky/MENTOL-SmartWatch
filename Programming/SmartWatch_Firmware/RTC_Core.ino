@@ -14,12 +14,42 @@ void rtc_loop() {
 void rtc_interrupt() {
   if ( rtc_is_second() )
   {
-    setTextColor(c_black);
-    printNumber(seconds, 4 , 50  , 2 , ' ');
+    seconds += 5;
+    
+    digitalWrite(PC13,!digitalRead(PC13));
+    
+    if (seconds > 59)
+    {
+      seconds = 0;
+      minute  += 1;
+      isMinuteChanged = true;
 
-    seconds += 1;
+      if (minute > 59)
+      {     
+        minute = 0;
+        hour  += 1;
+        isHourChanged = true;
 
-    setTextColor(c_green);
-    printNumber(seconds, 4 , 50  , 2 , ' ');
+        if (hour > 23)
+        {
+          hour = 0;
+          day  += 1;
+          isDayChanged = true;
+
+          if (day > DAYS[month])
+          {
+            day = 0;
+            month  += 1;
+
+            if (month > 11)
+            {
+              month = 0;
+              year += 1;
+            }
+          }
+
+        }
+      }
+    }
   }
 }

@@ -1,6 +1,6 @@
 void setTextColor(uint16_t color)
 {
-  textcolor = color;
+  textColor = color;
 }
 
 uint16_t color(uint8_t r, uint8_t g, uint8_t b) {

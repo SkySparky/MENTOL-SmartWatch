@@ -12,7 +12,7 @@ void drawChar(char c, int8_t x, int8_t y)
       for (int8_t i = 0; i < 8; i++)
       {
         if ((ch & (1 << (7 - i))) != 0)
-          drawPixel(x + i + (zz * 8) , y + j , textcolor);
+          drawPixel(x + i + (zz * 8) , y + j , textColor);
       }
     }
     temp += (fontXsize / 8);
@@ -20,12 +20,22 @@ void drawChar(char c, int8_t x, int8_t y)
 }
 
 
+void setCurrentFont(fontdatatype* font)
+{
+  fontData   = font;
+  fontXsize  = font[0];
+  fontYsize  = font[1];
+  fontOffset = font[2];
+  fontNumchars = font[3];
+}
+
+
 void drawString(char *string, int16_t x, int16_t y)
 {
   uint8_t stl = strlen( string );
-  
+
   for (uint8_t i = 0; i < stl; i++)
-      drawChar(*string++, x + (i * (fontXsize)), y);
+    drawChar(*string++, x + (i * (fontXsize)), y);
 }
 
 
@@ -91,4 +101,4 @@ void printNumber(long num, int x, int y, int length, char filler)
   }
 
   drawString(st, x, y);
-  }
+}
