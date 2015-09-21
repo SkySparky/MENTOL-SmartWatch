@@ -1,24 +1,27 @@
 #include <SPI.h>
 #include <RTClock.h>
 
-RTClock rtc (RTCSEL_LSE);
-unsigned long int seconds;
+#include "FontPack.c"
 
+int seconds = 0;
 
-#include "Segment.c"
-#include "SmallFont.c"
-#include "NormalFont.c"
-#include "DotMatrix.c"
+struct Font
+{
+  fontdatatype* font;
+  uint8_t x_size;
+  uint8_t y_size;
+  uint8_t offset;
+  uint8_t numchars;
+};
 
-//byte fch, fcl, bch, bcl;
-
-#define fontdatatype const unsigned char
+Font cfont;
 
 fontdatatype* fontData;
 uint8_t fontXsize;
 uint8_t fontYsize;
 uint8_t fontOffset;
 uint8_t fontNumchars;
+
 
 volatile uint32  *dcport, *csport;
 uint32_t   cspinmask, dcpinmask;
@@ -27,11 +30,12 @@ uint32_t   cspinmask, dcpinmask;
 
 //PIN CONFIGURATIONS
 #define TFT_SDA    PA7
+//SPI_MISO(passive)PA6
 #define TFT_SCK    PA5
 #define TFT_CS     PA4
 #define TFT_RS     PA3
 #define TFT_RST    PA2
-#define TFT_LED    PB7
+#define TFT_LED    PB7 
 
 
 //LCD PARAMETERS
@@ -102,16 +106,7 @@ uint16_t lineBuffer[TFT_HEIGHT];
 
 uint16_t textcolor   = 1;
 uint16_t textbgcolor = 1;
-/*
-void setCurrentFont(fontdatatype* font)
-{
-  fontData = font;
-  fontXsize = font[0];
-  fontYsize  = font[1];
-  fontOffset = font[2];
-  fontNumchars = font[3];
-}
-*/
+
 void setup(void) {
   pinMode(PC13, OUTPUT);
   digitalWrite(PC13, 1);
@@ -122,37 +117,16 @@ void setup(void) {
   //button_init();
 
 
-
   fillScreen(c_black);
   drawLine(0, 0, 127, 0, c_green);
-  drawLine(0, 18, 127, 18, c_green);
+  drawLine(0, 21, 127, 21, c_green);
   drawLine(0, 127, 127, 127, c_green);
 
+  setCurrentFont(DotMatrix);
 
   //setTextColor(c_green);
-  //drawString("23:08" , 4, 50);
 
-  fontData = SmallFont;
-  fontXsize = SmallFont[0];
-  fontYsize  = SmallFont[1];
-  fontOffset = SmallFont[2];
-  fontNumchars = SmallFont[3];
-  
-  //setCurrentFont(SmallFont);
-  setTextColor(c_red);
-  drawString("12 July 2015" , 15, 3);
-
-
-  fontData = Segment;
-  fontXsize = Segment[0];
-  fontYsize  = Segment[1];
-  fontOffset = Segment[2];
-  fontNumchars = Segment[3];
-  
-  //setCurrentFont(Segment);
-  setTextColor(c_yellow);
-  printNumber(seconds, 4, 50  , 2 , '-');
-
+  //printNumber(18, 70, 50  , 2 , '-');
 }
 
 void loop() {
@@ -160,6 +134,25 @@ void loop() {
   rtc_loop();
   //button_loop();
 
+
+  setTextColor(c_green);
+  drawString(":" , 54, 50);
+  delay(750);
+
+  setTextColor(c_black);
+  drawString(":" , 54, 50);
+  delay(250);
+
+
+}
+
+void setCurrentFont(fontdatatype* font)
+{
+  fontData   = font;
+  fontXsize  = font[0];
+  fontYsize  = font[1];
+  fontOffset = font[2];
+  fontNumchars = font[3];
 }
 
 

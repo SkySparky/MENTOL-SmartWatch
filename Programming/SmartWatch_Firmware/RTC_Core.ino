@@ -1,29 +1,25 @@
-void rtc_init()
-{
-  /*
+void rtc_init() {
   rtc_init(RTCSEL_LSI);
   rtc_set_prescaler_load(0x7fff);
   rtc_set_count(0);
 
-  rtc_attach_interrupt(RTC_SECONDS_INTERRUPT, rtc_function);
-  */
 
-  rtc.attachSecondsInterrupt(rtc_function);
+  rtc_attach_interrupt(RTC_SECONDS_INTERRUPT, rtc_interrupt);
 }
 
-void rtc_loop()
-{
-
-
+void rtc_loop() {
 
 }
 
-void rtc_function()
-{
-  seconds+=1;// = rtc.getTime();
-  printNumber(seconds, 4, 50  , 2 , '-');
-  
-  //timeh = (time >> 16) & 0xffff;
-  //timel = time & 0xffff;
+void rtc_interrupt() {
+  if ( rtc_is_second() )
+  {
+    setTextColor(c_black);
+    printNumber(seconds, 4 , 50  , 2 , ' ');
 
+    seconds += 1;
+
+    setTextColor(c_green);
+    printNumber(seconds, 4 , 50  , 2 , ' ');
+  }
 }

@@ -1,5 +1,3 @@
-
-
 void drawChar(char c, int8_t x, int8_t y)
 {
   int8_t ch;
@@ -25,10 +23,12 @@ void drawChar(char c, int8_t x, int8_t y)
 void drawString(char *string, int16_t x, int16_t y)
 {
   uint8_t stl = strlen( string );
-
+  
   for (uint8_t i = 0; i < stl; i++)
-    drawChar(*string++, x + (i * (fontXsize)), y);
+      drawChar(*string++, x + (i * (fontXsize)), y);
 }
+
+
 
 void printNumber(long num, int x, int y, int length, char filler)
 {
