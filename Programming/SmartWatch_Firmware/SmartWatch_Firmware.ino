@@ -4,10 +4,6 @@
 #include "FontPack.c"
 #include "Parameters.h"
 
-
-
-
-
 uint16_t textColor   = 1;
 uint16_t textBgColor = 1;
 
