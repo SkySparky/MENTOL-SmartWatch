@@ -1,5 +1,4 @@
 # SmartWatch
-Smart Watch project
 
 Introduction
    
@@ -10,6 +9,7 @@ Hardware Details
    - STM32F103CB (ARM 32-bit Cortex™-M3, 72 mHz, 128k Flash, RTC)
    - ST7735S LCD (1.44' TFT, nonTouch, 128x128 px, 65535 color)
    - HM-11 BLE 4.0 (CC2541, Low Power)
+   - MPU 6050 (6 DOF IMU)
    - Transistor for LCD's backlight led
    - 3 pushbuttons
    - RGB LED for notifications
@@ -23,5 +23,5 @@ Coding Details
    - For easy following, code is seperated into many .ino files according to their jobs
    - Buttons are handled by me to get their states when Pressed, Released, LongPressed or Free.
    - For displaying texts and fonts, UTFT library is used because they have easy Font making tools!
-   - Adafruit's ColorWheel is included to pick a color (it is from Adafruit's NeoPixel library)
+   - Adafruit's ColorWheel function is included to pick a color (it is from Adafruit's NeoPixel library)
   
