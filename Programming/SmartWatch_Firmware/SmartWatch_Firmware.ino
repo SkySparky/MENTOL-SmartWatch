@@ -14,6 +14,7 @@ void setup(void) {
   button_init();
 
   setCurrentFont(Segment);
+  isMinuteChanged = true;
 }
 
 void loop() {
@@ -25,16 +26,27 @@ void loop() {
   if (isMinuteChanged || isHourChanged)
   {
     fillScreen(c_white);
-    
-    isHourChanged   = false;
-    isMinuteChanged = false;
-  }
-  
-  setTextColor(c_black);
-  printNumber(hour, 12, 50  , 2 , ' ');
-  drawString(":" , 53, 50);
-  printNumber(minute, 70, 50  , 2 , '0');
 
+    setTextColor(c_black);
+    printNumber(hour, 12, 50  , 2 , ' ');
+    printNumber(minute, 70, 50  , 2 , '0');
+
+    isHourChanged   = false;
+    isMinuteChanged = false;  
+  }
+
+
+  if (isSecondChanged)
+  {
+    if (second %2 == 0)
+    setTextColor(c_black);
+    else
+    setTextColor(c_white);
+    
+    drawString(":" , 53, 50);
+
+    isSecondChanged = false;
+  }
 
 }
 

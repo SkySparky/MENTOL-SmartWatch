@@ -14,13 +14,14 @@ void rtc_loop() {
 void rtc_interrupt() {
   if ( rtc_is_second() )
   {
-    seconds += 5;
+    second += 1;
+    isSecondChanged = true;
     
     digitalWrite(PC13,!digitalRead(PC13));
     
-    if (seconds > 59)
+    if (second > 59)
     {
-      seconds = 0;
+      second = 0;
       minute  += 1;
       isMinuteChanged = true;
 

@@ -49,7 +49,7 @@ Button buttons[3] = {
 
 
 ////////////// RTC - DATE/TIME
-uint8_t seconds = 0;
+uint8_t second = 0;
 uint8_t minute  = 59;
 uint8_t hour    = 21;
 uint8_t day     = 21;
@@ -59,6 +59,7 @@ uint16_t year   = 2015;
 boolean isMinuteChanged = false;
 boolean isHourChanged   = false;
 boolean isDayChanged   = false;
+boolean isSecondChanged = false;
 
 uint8_t DAYS[12] = {30, 31, 30, 29, 30, 31, 30, 31, 30, 31, 30, 31};
 
