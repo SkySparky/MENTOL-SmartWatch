@@ -46,6 +46,29 @@ Button buttons[3] = {
   {PIN_BUTTON_3, false,  0, 0}
 };
 
+//SCREENSAVER 
+boolean ssaverEnabled = false;
+uint8_t screensaver  = 0;
+#define SSAVER_EMPTY 0
+#define SSAVER_STAR 1
+#define SSAVER_SNOW 2
+
+
+////////////// PARTICLES
+struct Particle
+{
+  float x;
+  float y;
+  float xSpeed;
+  float ySpeed;
+  float color;
+  float colorSpeed;
+  float size;
+};
+
+uint8_t numParticle = 0;
+#define MAX_NUMBER_OF_PARTICLES 40
+Particle particleArray[MAX_NUMBER_OF_PARTICLES];
 
 
 ////////////// RTC - DATE/TIME
@@ -70,6 +93,13 @@ uint8_t fontYsize;
 uint8_t fontOffset;
 uint8_t fontNumchars;
 
+#define FONT_NORMAL  NormalFont
+#define FONT_SMALL   SmallFont
+#define FONT_SEGMENT Segment
+#define FONT_DOTS    DotMatrix
+
+uint16_t colorText   = 1;
+uint16_t colorBack = 0;
 
 ////////////// MATH
 #define swap(a, b) { int16_t t = a; a = b; b = t; }
@@ -138,7 +168,8 @@ float ledLevel = 0;
 #define c_magenta 0xF81F
 #define c_yellow  0xFFE0
 #define c_white   0xFFFF
-
+uint16_t c_gray = ((55 & 0xF8) << 8) | ((55 & 0xFC) << 3) | (55 >> 3);
+uint16_t c_orange = ((0 & 0xF8) << 8) | ((220 & 0xFC) << 3) | (220 >> 3);
 
 ////////////// SPI
 volatile uint32  *dcport, *csport;

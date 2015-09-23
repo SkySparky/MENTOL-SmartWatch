@@ -40,11 +40,6 @@ boolean ssaverClear()
 
 void ssaver_loop()
 {
-
-}
-
-void ssaver_draw()
-{
   if (ssaverEnabled == false)
     return;
 

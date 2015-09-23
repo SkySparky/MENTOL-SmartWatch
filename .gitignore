@@ -30,3 +30,7 @@
 
 # Debug files
 *.dSYM/
+Media/CAD/Animation/strip_big.bmp
+Media/CAD/Animation/strip.bmp
+Media/CAD/Animation/strip_zoom.bmp
+Media/CAD/Animation/rendersettings.txt

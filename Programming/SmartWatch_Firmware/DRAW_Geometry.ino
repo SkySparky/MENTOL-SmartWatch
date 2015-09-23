@@ -1,11 +1,18 @@
+//////////////////////////////////////// DRAW RECTANGlE //////////////////////////////
+void drawRect(int16_t _x, int16_t _y, int16_t _w, int16_t _h,  uint16_t _col) {
+
+  if ((_x < 0) || (_x >= TFT_WIDTH) || (_y < 0) || (_y >= TFT_HEIGHT)) return;
+
+  drawQuad(_x,_y, _x+_w,_y, _x+_w, _y+_h, _x, _y+_h, _col);
+}
 //////////////////////////////////////// DRAW PIXEL //////////////////////////////
-void drawPixel(int16_t x, int16_t y, uint16_t color) {
+void drawPixel(int16_t _x, int16_t _y, uint16_t _col) {
 
-  if ((x < 0) || (x >= TFT_WIDTH) || (y < 0) || (y >= TFT_HEIGHT)) return;
+  if ((_x < 0) || (_x >= TFT_WIDTH) || (_y < 0) || (_y >= TFT_HEIGHT)) return;
 
-  setAddrWindow(x, y, x + 1, y + 1);
+  setAddrWindow(_x, _y, _x + 1, _y + 1);
 
-  setColor(color);
+  setColor(_col);
 }
 
 //////////////////////////////////////// FILL RECT //////////////////////////////
