@@ -1,3 +1,8 @@
+void lcd_loop()
+{
+
+}
+
 void lcd_init() {
 
   pinMode(TFT_RST, OUTPUT);
@@ -39,7 +44,7 @@ void lcd_init() {
 
   delay(100);
   writeCommand(ST7735_DISPON); // normal display on
-  
+
   fillScreen(c_white);
 }
 

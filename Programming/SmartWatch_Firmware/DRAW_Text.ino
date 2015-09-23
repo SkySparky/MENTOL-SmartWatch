@@ -12,7 +12,7 @@ void drawChar(char c, int8_t x, int8_t y)
       for (int8_t i = 0; i < 8; i++)
       {
         if ((ch & (1 << (7 - i))) != 0)
-          drawPixel(x + i + (zz * 8) , y + j , textColor);
+          drawPixel(x + i + (zz * 8) , y + j , colorText);
       }
     }
     temp += (fontXsize / 8);
@@ -38,9 +38,19 @@ void drawString(char *string, int16_t x, int16_t y)
     drawChar(*string++, x + (i * (fontXsize)), y);
 }
 
+void drawString(char *string, int16_t x, int16_t y, uint16_t col)
+{
+  setTextColor(col);
+  drawString(string, x, y);
+}
 
+void drawNumber(long num, int x, int y, int length, char filler, uint16_t col)
+{
+  setTextColor(col);
+  drawNumber(num,x,y,length,filler);
+}
 
-void printNumber(long num, int x, int y, int length, char filler)
+void drawNumber(long num, int x, int y, int length, char filler)
 {
   char buf[25];
   char st[27];

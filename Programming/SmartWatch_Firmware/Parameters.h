@@ -56,10 +56,10 @@ uint8_t day     = 21;
 uint8_t month   = 9;
 uint16_t year   = 2015;
 
-boolean isMinuteChanged = false;
-boolean isHourChanged   = false;
-boolean isDayChanged   = false;
-boolean isSecondChanged = false;
+boolean isMinuteChanged = true;
+boolean isHourChanged   = true;
+boolean isDayChanged    = true;
+boolean isSecondChanged = true;
 
 uint8_t DAYS[12] = {30, 31, 30, 29, 30, 31, 30, 31, 30, 31, 30, 31};
 

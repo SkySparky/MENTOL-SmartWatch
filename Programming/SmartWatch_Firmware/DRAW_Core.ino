@@ -1,3 +1,8 @@
+void clearScreen()
+{
+  fillScreen(colorBack);
+}
+
 void fillScreen(uint16 color) {
 
   setAddrWindow(0, 0, TFT_WIDTH - 1, TFT_HEIGHT - 1);
