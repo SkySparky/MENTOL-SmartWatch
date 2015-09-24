@@ -67,7 +67,7 @@ struct Particle
 };
 
 uint8_t numParticle = 0;
-#define MAX_NUMBER_OF_PARTICLES 40
+#define MAX_NUMBER_OF_PARTICLES 80
 Particle particleArray[MAX_NUMBER_OF_PARTICLES];
 
 
@@ -96,7 +96,7 @@ uint8_t fontNumchars;
 #define FONT_NORMAL  NormalFont
 #define FONT_SMALL   SmallFont
 #define FONT_SEGMENT Segment
-#define FONT_DOTS    DotMatrix
+#define FONT_MATRIX    DotMatrix
 
 uint16_t colorText   = 1;
 uint16_t colorBack = 0;
@@ -168,7 +168,8 @@ float ledLevel = 0;
 #define c_magenta 0xF81F
 #define c_yellow  0xFFE0
 #define c_white   0xFFFF
-uint16_t c_gray = ((55 & 0xF8) << 8) | ((55 & 0xFC) << 3) | (55 >> 3);
+uint16_t c_lgray = ((200 & 0xF8) << 8) | ((200 & 0xFC) << 3) | (200 >> 3);
+uint16_t c_gray = ((130 & 0xF8) << 8) | ((130 & 0xFC) << 3) | (130 >> 3);
 uint16_t c_orange = ((0 & 0xF8) << 8) | ((220 & 0xFC) << 3) | (220 >> 3);
 
 ////////////// SPI

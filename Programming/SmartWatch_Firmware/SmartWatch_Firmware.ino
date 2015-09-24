@@ -25,9 +25,16 @@ boolean segmentData[10][7] = {
   {true, true, true, true, false, true, true}, //9
 };
 
-uint8 segmentWidth = 18;
-uint8 segmentStroke = 2;
+uint8 segmentWidth = 38;
+uint8 segmentStroke = 4;
 uint16_t segmentColor = c_white;
+uint16_t segmentFillColor = c_red;
+
+unsigned long int loopTime = 0;
+float delta = 0;
+float deltaHedef = 0;
+
+uint  fpsFinal = 100;
 
 void setup(void) {
   backlight_init();
@@ -37,19 +44,22 @@ void setup(void) {
   ssaver_init();
   menu_init();
 
-  setCurrentFont(FONT_SMALL);
+
 
   colorBack = c_black;
   fillScreen( colorBack );
 
   ssaverSetAnimation(0);
 
-  drawLine(0, 0, 127, 0 , c_green);
+  //drawLine(0, 0, 127, 0 , c_green);
   //drawLine(0, 15, 127, 15, c_green);
-  drawLine(0, 127, 127, 127 , c_green);
+  //drawLine(0, 127, 127, 127 , c_green);
 }
 
 void loop() {
+  loopTime = millis();
+
+
   backlight_loop();
   lcd_loop();
   rtc_loop();
@@ -57,17 +67,6 @@ void loop() {
   ssaver_loop();
   menu_loop();
 
-  /*
-    if (isMinuteChanged)
-    {
-      drawSegmentNumber(minute - 1, 6, 36, c_white );
-      drawSegmentNumber(minute, 6, 36, c_black );
-
-      isMinuteChanged = false;
-    }
-  */
-
-  drawSegmentWatch(c_orange);
 
   if (isPressed(0))
     ssaverSetAnimation(0);
@@ -78,14 +77,33 @@ void loop() {
   if (isPressed(2))
     ssaverSetAnimation(2);
 
+  drawSegmentWatch(c_green, c_green,    c_black, c_black , true, false);
   //colorText = c_green;
   //drawTimeAlways();
 
   end_loop();
+
+
 }
 
 void end_loop()
 {
+  setCurrentFont(FONT_SMALL);
 
+  drawNumber(fpsFinal    , 0, 0, 3, ' ', c_black);
+
+  deltaHedef = millis() - loopTime;
+
+  delta += (deltaHedef - delta)/24.0; //
+  fpsFinal = (1000.0 / delta);
+/*
+  if (abs(fpsFinal - floor(fps)) > 1)
+  {
+    fpsFinal = floor(fps);
+  }*/
+
+  drawNumber(fpsFinal , 0, 0, 3, ' ', (fpsFinal > 55)*c_white + (fpsFinal <= 55)*c_blue);
+
+  delay(max(0, 20 - delta));
 }
 

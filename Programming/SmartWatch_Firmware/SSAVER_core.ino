@@ -5,6 +5,9 @@ void ssaver_init()
 
 boolean ssaverSetAnimation(int _id)
 {
+  if (_id == screensaver)
+    return false;
+
   if (_id > 2)
     return false;
   else
@@ -18,7 +21,7 @@ boolean ssaverSetAnimation(int _id)
   else if (screensaver == SSAVER_STAR)
     particleStar_init(30);
   else if (screensaver == SSAVER_SNOW)
-    particleSnow_init(40);
+    particleSnow_init(50);
 
   ssaverEnable(true);
 
@@ -56,5 +59,12 @@ void ssaverEnable(boolean _en)
 {
   ssaverEnabled = _en;
 }
+
+void ssaverRestart(boolean _en)
+{
+  ssaverClear();
+  ssaverSetAnimation(_en);
+}
+
 
 

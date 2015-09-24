@@ -56,7 +56,7 @@ void particleSnow_init(uint8 _numParts)
       particleArray[i].x = random(128);
       particleArray[i].y = 0;
       particleArray[i].ySpeed = 2+random(4);
-      particleArray[i].xSpeed = 0;
+      particleArray[i].xSpeed = random(2)-random(2);
       particleArray[i].color = random(255);
       particleArray[i].colorSpeed = 0;
       particleArray[i].size = 1+random(5);
@@ -70,15 +70,16 @@ void particleSnow_draw(boolean _ok)
     particleArray[i].y += particleArray[i].ySpeed;
     particleArray[i].x += particleArray[i].xSpeed;
     
-    if (particleArray[i].y > 126 && _ok)
+    if (particleArray[i].y > 125 && _ok)
     {
       //fillRect( particleArray[i].x-particleArray[i].xSpeed, particleArray[i].y-particleArray[i].ySpeed, particleArray[i].size, particleArray[i].size, colorBack); 
- 
-      particleArray[i].xSpeed = random(3)-random(3);
+      particleArray[i].ySpeed = 2+random(3);
+      particleArray[i].xSpeed = random(2)-random(2); 
+      
       particleArray[i].size = 1+random(5);
       particleArray[i].x = random(128);
       particleArray[i].y = 0;
-      particleArray[i].ySpeed = 2+random(4);
+      
       particleArray[i].color = 205+random(50);
     }
 
@@ -94,7 +95,7 @@ void particleSnow_clear()
     fillRect( particleArray[i].x, particleArray[i].y, particleArray[i].size, particleArray[i].size, colorBack);
   }
   
-  fillRect(0,120,127,127,colorBack);
+  fillRect(0,120,128,127,colorBack);
 }
 
 

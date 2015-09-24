@@ -14,7 +14,7 @@ void rtc_loop() {
 void rtc_interrupt() {
   if ( rtc_is_second() )
   {
-    second += 15;
+    second += 31;
     isSecondChanged = true;
     
     digitalWrite(PC13,!digitalRead(PC13));
