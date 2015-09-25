@@ -3,11 +3,24 @@ void ssaver_init()
   ssaverSetAnimation(0);
 }
 
+boolean ssaverSetParticleNumber(int _no)
+{
+  ssaverClear();
+
+  if (screensaver == SSAVER_EMPTY)
+    particleEmpty_init(_no);
+  else if (screensaver == SSAVER_STAR)
+    particleStar_init(_no);
+  else if (screensaver == SSAVER_SNOW)
+    particleSnow_init(_no);
+
+  ssaverEnable(true);
+
+  return true;
+
+}
 boolean ssaverSetAnimation(int _id)
 {
-  if (_id == screensaver)
-    return false;
-
   if (_id > 2)
     return false;
   else
@@ -17,11 +30,11 @@ boolean ssaverSetAnimation(int _id)
   }
 
   if (screensaver == SSAVER_EMPTY)
-    particleEmpty_init(0);
+    particleEmpty_init(SSAVER_EMPTY_DEFAULT_PARTICLE);
   else if (screensaver == SSAVER_STAR)
-    particleStar_init(30);
+    particleStar_init(SSAVER_STAR_DEFAULT_PARTICLE);
   else if (screensaver == SSAVER_SNOW)
-    particleSnow_init(50);
+    particleSnow_init(SSAVER_SNOW_DEFAULT_PARTICLE);
 
   ssaverEnable(true);
 

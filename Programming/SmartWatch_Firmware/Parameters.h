@@ -46,6 +46,50 @@ Button buttons[3] = {
   {PIN_BUTTON_3, false,  0, 0}
 };
 
+//SEGMENT
+float segWatchAlphaCurrent[4][7];
+float segWatchAlphaTarget[4][7];
+
+uint8 segWatchX = 22;
+uint8 segWatchY = 34;
+uint segWatchShift = 1;
+
+uint8 segWatchDotsAlphaCurrent = 0;
+
+uint8 segWatchLineColor = 0;
+uint8 segWatchFillColor = 0;
+
+boolean segWatchUpdated = true;
+
+boolean segWatchIsFill = false;
+boolean segWatchIsLine = true;
+boolean segWatchIsSmooth = true;
+boolean segWatchIsAlways = true;
+
+#define SEG_WATCH_ANIM_SMOOTH      1
+#define SEG_WATCH_ANIM_FAST        2
+#define SEG_WATCH_DRAW_ALWAYS      11
+#define SEG_WATCH_DRAW_ON_UPDATE   12
+#define SEG_WATCH_SHOW_FILLED      22
+#define SEG_WATCH_SHOW_LINES       23
+#define SEG_WATCH_SHOW_LINES_AND_FILLED       24
+
+boolean segmentData[10][7] = {
+  {true, true, true, true, true, true, false}, //0
+  {false, true, true, false, false, false, false}, //1
+  {true, true, false, true, true, false, true}, //2
+  {true, true, true, true, false, false, true}, //3
+  {false, true, true, false, false, true, true}, //4
+  {true, false, true, true, false, true, true}, //5
+  {true, false, true, true, true, true, true}, //6
+  {true, true, true, false, false, false, false}, //7
+  {true, true, true, true, true, true, true},  //8
+  {true, true, true, true, false, true, true}, //9
+};
+
+uint8 segmentWidth = 38;
+uint8 segmentStroke = 4;
+
 //SCREENSAVER 
 boolean ssaverEnabled = false;
 uint8_t screensaver  = 0;
@@ -53,6 +97,9 @@ uint8_t screensaver  = 0;
 #define SSAVER_STAR 1
 #define SSAVER_SNOW 2
 
+#define SSAVER_EMPTY_DEFAULT_PARTICLE MAX_NUMBER_OF_PARTICLES
+#define SSAVER_STAR_DEFAULT_PARTICLE  30
+#define SSAVER_SNOW_DEFAULT_PARTICLE  40
 
 ////////////// PARTICLES
 struct Particle
@@ -67,9 +114,8 @@ struct Particle
 };
 
 uint8_t numParticle = 0;
-#define MAX_NUMBER_OF_PARTICLES 80
+#define MAX_NUMBER_OF_PARTICLES 255
 Particle particleArray[MAX_NUMBER_OF_PARTICLES];
-
 
 ////////////// RTC - DATE/TIME
 uint8_t second = 0;
@@ -96,7 +142,7 @@ uint8_t fontNumchars;
 #define FONT_NORMAL  NormalFont
 #define FONT_SMALL   SmallFont
 #define FONT_SEGMENT Segment
-#define FONT_MATRIX    DotMatrix
+#define FONT_MATRIX  DotMatrix
 
 uint16_t colorText   = 1;
 uint16_t colorBack = 0;

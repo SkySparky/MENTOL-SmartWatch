@@ -1,6 +1,24 @@
+void fps_control()
+{
+  setCurrentFont(FONT_SMALL);
+
+  drawNumber(fpsFinal    , 0, 0, 3, ' ', c_black);
+
+  deltaHedef = millis() - loopTime;
+
+  delta += (deltaHedef - delta) / 2.0; //For smoothing 
+  fpsFinal = (1000.0 / delta);
+
+  drawNumber(fpsFinal ,  0, 0, 3, ' ' , (fpsFinal > 30)*c_white + (fpsFinal <= 30)*c_blue);
+  drawNumber(page , 110, 0,    2, ' ' , c_blue);
+
+  delay(max(0, 20 - delta));
+}
+
+
 void lcd_loop()
 {
-
+  loopTime = millis();
 }
 
 void lcd_init() {

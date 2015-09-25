@@ -1,7 +1,14 @@
+void clearScreen(uint16_t _col)
+{
+  colorBack = _col;
+  fillScreen(colorBack); 
+}
+
 void clearScreen()
 {
-  fillScreen(colorBack);
+  fillScreen(colorBack); 
 }
+
 
 void fillScreen(uint16 color) {
 
