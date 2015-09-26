@@ -1,10 +1,19 @@
 void setSegmentWatchMode(uint8 _mode)
 {
+  if (_mode == SEG_WATCH_ENABLE)
+    segWatchIsEnabled = true;
+  if (_mode == SEG_WATCH_DISABLE)
+    segWatchIsEnabled = false;
+
+  if (_mode == SEG_WATCH_TEXT)
+    segWatchIsText = true;
+  if (_mode == SEG_WATCH_VECTOR)
+    segWatchIsText = false;
+
   if (_mode == SEG_WATCH_ANIM_SMOOTH)
     segWatchIsSmooth = true;
   if (_mode == SEG_WATCH_ANIM_FAST)
     segWatchIsSmooth = false;
-
 
   if (_mode == SEG_WATCH_DRAW_ALWAYS)
     segWatchIsAlways = true;
@@ -55,13 +64,21 @@ void setSegmentWatchSmooth(uint8 _hour, uint8 _minute)
 
 void segmentWatch_loop()
 {
-  if (segWatchIsSmooth)
-    drawSegmentWatchSmooth(c_green, c_green,    c_black, c_black , segWatchIsAlways || segWatchUpdated, segWatchIsLine, segWatchIsFill);
-  else
-    drawSegmentWatchFast(  c_green, c_green,    c_black, c_black , segWatchIsAlways || segWatchUpdated, segWatchIsLine, segWatchIsFill);
+  if (segWatchIsEnabled)
+  {
+    if (segWatchIsText)
+      drawTextTime(c_black, c_green, segWatchIsAlways || segWatchUpdated);
+    else
+    {
+      if (segWatchIsSmooth)
+        drawSegmentWatchSmooth(c_green, c_green,    c_black, c_black , segWatchIsAlways || segWatchUpdated, segWatchIsLine, segWatchIsFill);
+      else
+        drawSegmentWatchFast(  c_green, c_green,    c_black, c_black , segWatchIsAlways || segWatchUpdated, segWatchIsLine, segWatchIsFill);
+    }
 
-  if (segWatchUpdated)
-    segWatchUpdated = false;
+    if (segWatchUpdated)
+      segWatchUpdated = false;
+  }
 }
 
 

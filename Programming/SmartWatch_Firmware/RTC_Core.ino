@@ -19,7 +19,7 @@ void rtc_interrupt() {
     
     digitalWrite(PC13,!digitalRead(PC13));
     
-    if (second > 4)
+    if (second > 3)
     {
       second = 0;
       minute  += 1;

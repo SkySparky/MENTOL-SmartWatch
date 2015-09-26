@@ -4,17 +4,15 @@
 #include "FontPack.c"
 #include "Parameters.h"
 
-#define VERSION  0.15
+#define VERSION  0.19
 
 //MODE
 uint8_t mode = 0;
-uint8_t page = 1;
+int page = -1;
 
 #define MODE_TEST  99
 #define MODE_MAIN  10
 #define MODE_CLOCK  2
-
-
 
 unsigned long int loopTime = 0;
 float delta = 0;
@@ -34,7 +32,6 @@ void setup(void) {
 
   mode = MODE_TEST;
 
-  drawNumber(mode , 120, 0, 1, ' ', c_blue);
   clearScreen( c_black );
 }
 
@@ -47,7 +44,7 @@ void loop() {
   menu_loop();
   segmentWatch_loop();
   
-
+  
   if (isReleased(0))
   {
     clearScreen();
@@ -61,6 +58,8 @@ void loop() {
     pageMovePrevious();  
     segmentWatchUpdate();   
   }
+
+
 
   fps_control();
 }

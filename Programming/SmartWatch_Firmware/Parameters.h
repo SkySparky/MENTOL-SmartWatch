@@ -60,14 +60,22 @@ uint8 segWatchLineColor = 0;
 uint8 segWatchFillColor = 0;
 
 boolean segWatchUpdated = true;
+boolean segWatchIsEnabled = false;
+boolean segWatchIsText = false;
 
 boolean segWatchIsFill = false;
 boolean segWatchIsLine = true;
 boolean segWatchIsSmooth = true;
 boolean segWatchIsAlways = true;
 
-#define SEG_WATCH_ANIM_SMOOTH      1
-#define SEG_WATCH_ANIM_FAST        2
+#define SEG_WATCH_ENABLE           1
+#define SEG_WATCH_DISABLE          2
+
+#define SEG_WATCH_TEXT             3
+#define SEG_WATCH_VECTOR           4
+
+#define SEG_WATCH_ANIM_SMOOTH      5
+#define SEG_WATCH_ANIM_FAST        6
 #define SEG_WATCH_DRAW_ALWAYS      11
 #define SEG_WATCH_DRAW_ON_UPDATE   12
 #define SEG_WATCH_SHOW_FILLED      22
