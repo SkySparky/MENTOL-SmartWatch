@@ -9,11 +9,10 @@ void fps_control()
   delta += (deltaHedef - delta) / 20.0; //For smoothing 
   fpsFinal = (1000.0 / delta);
 
-  drawNumber(min(999,fpsFinal) ,  0, 0, 3, ' ' , (fpsFinal > 30)*c_white + (fpsFinal <= 30)*c_blue);
-  drawNumber(page+1 , 105, 0,    2, ' ' , c_blue);
+  drawNumber(min(999,fpsFinal) ,  0, 0, 3, ' ' , (fpsFinal > 30)*c_white + (fpsFinal <= 30)*c_red);
+  //drawNumber(page+1 , 105, 0,    2, ' ' , c_blue);
 
   delay(max(0, 20 - delta));
-  
 }
 
 
@@ -84,7 +83,7 @@ void lcd_init_commands() {
   writeCommand(ST7735_PWCTR5, 0x8A, 0xEE); // power control
   writeCommand(ST7735_VMCTR1, 0x0E);       // power control VCOM
 
-  writeCommand(ST7735_MADCTL, 0xC8); // MX,MY RGB Mode - set color mode, 16-bit color
+  writeCommand(ST7735_MADCTL, 0xC0); // MX,MY RGB Mode - set color mode, 16-bit color //  0xC0:BGR  
   writeCommand(ST7735_COLMOD, 0x05);
 
 

@@ -71,9 +71,6 @@ boolean segWatchIsAlways = true;
 #define SEG_WATCH_ENABLE           1
 #define SEG_WATCH_DISABLE          2
 
-#define SEG_WATCH_TEXT             3
-#define SEG_WATCH_VECTOR           4
-
 #define SEG_WATCH_ANIM_SMOOTH      5
 #define SEG_WATCH_ANIM_FAST        6
 #define SEG_WATCH_DRAW_ALWAYS      11
@@ -106,7 +103,7 @@ uint8_t screensaver  = 0;
 #define SSAVER_SNOW 2
 
 #define SSAVER_EMPTY_DEFAULT_PARTICLE MAX_NUMBER_OF_PARTICLES
-#define SSAVER_STAR_DEFAULT_PARTICLE  30
+#define SSAVER_STAR_DEFAULT_PARTICLE  40
 #define SSAVER_SNOW_DEFAULT_PARTICLE  40
 
 ////////////// PARTICLES
@@ -125,20 +122,33 @@ uint8_t numParticle = 0;
 #define MAX_NUMBER_OF_PARTICLES 255
 Particle particleArray[MAX_NUMBER_OF_PARTICLES];
 
+//////// FPS 
+unsigned long int loopTime = 0;
+float delta = 0;
+float deltaHedef = 0;
+
+uint  fpsFinal = 100;
+
+
 ////////////// RTC - DATE/TIME
-uint8_t second = 0;
-uint8_t minute  = 59;
-uint8_t hour    = 21;
-uint8_t day     = 21;
-uint8_t month   = 9;
-uint16_t year   = 2015;
+struct  Time{ 
+  uint8_t second; 
+  uint8_t minute; 
+  uint8_t hour; 
+  //uint8_t Wday;   // day of week, sunday is day 1
+  uint8_t day;
+  uint8_t month; 
+  uint8_t year;   // offset from 1970; 
+} ;
+
+Time mytime = {0,59,21, 26,9,45};
 
 boolean isMinuteChanged = true;
 boolean isHourChanged   = true;
 boolean isDayChanged    = true;
 boolean isSecondChanged = true;
 
-uint8_t DAYS[12] = {30, 31, 30, 29, 30, 31, 30, 31, 30, 31, 30, 31};
+uint8_t DAYS[12] = {31,28,31,30,31,30,31,31,30,31,30,31};
 
 ////////////// TEXT FONTS
 fontdatatype* fontData;
@@ -149,8 +159,6 @@ uint8_t fontNumchars;
 
 #define FONT_NORMAL  NormalFont
 #define FONT_SMALL   SmallFont
-#define FONT_SEGMENT Segment
-#define FONT_MATRIX  DotMatrix
 
 uint16_t colorText   = 1;
 uint16_t colorBack = 0;

@@ -5,11 +5,6 @@ void setSegmentWatchMode(uint8 _mode)
   if (_mode == SEG_WATCH_DISABLE)
     segWatchIsEnabled = false;
 
-  if (_mode == SEG_WATCH_TEXT)
-    segWatchIsText = true;
-  if (_mode == SEG_WATCH_VECTOR)
-    segWatchIsText = false;
-
   if (_mode == SEG_WATCH_ANIM_SMOOTH)
     segWatchIsSmooth = true;
   if (_mode == SEG_WATCH_ANIM_FAST)
@@ -64,21 +59,35 @@ void setSegmentWatchSmooth(uint8 _hour, uint8 _minute)
 
 void segmentWatch_loop()
 {
-  if (segWatchIsEnabled)
-  {
-    if (segWatchIsText)
-      drawTextTime(c_black, c_green, segWatchIsAlways || segWatchUpdated);
-    else
+  if (isAlarmEnabled( alarmDisableWatch ))
+    if (isAlarmRinging(alarmDisableWatch) )
     {
-      if (segWatchIsSmooth)
-        drawSegmentWatchSmooth(c_green, c_green,    c_black, c_black , segWatchIsAlways || segWatchUpdated, segWatchIsLine, segWatchIsFill);
-      else
-        drawSegmentWatchFast(  c_green, c_green,    c_black, c_black , segWatchIsAlways || segWatchUpdated, segWatchIsLine, segWatchIsFill);
+      setSegmentWatchMode(SEG_WATCH_DISABLE);
+
+      disableAlarm(alarmDisableWatch);
     }
 
-    if (segWatchUpdated)
-      segWatchUpdated = false;
+
+  if (segWatchIsEnabled)
+  {
+    if (themeSegWatch == THEME_SPACE)
+    {
+      themeSpaceDrawWatch();
+    }
+    else if (themeSegWatch == THEME_NONE)
+    {   
+        if (segWatchIsSmooth == false)
+          drawSegmentWatchFast(  c_black, c_red,    c_lgray, c_lgray , segWatchIsAlways || segWatchUpdated, segWatchIsLine, segWatchIsFill);
+        else
+          drawSegmentWatchSmooth(c_green, c_green,  c_black, c_black , segWatchIsAlways || segWatchUpdated, segWatchIsLine, segWatchIsFill);
+
+      if (segWatchUpdated)
+        segWatchUpdated = false;
+    }
   }
+
+  //if (isCornerTimeEnabled)
+    drawCornerTime();
 }
 
 
@@ -89,21 +98,21 @@ void segmentWatchUpdate()
 
 void drawSegmentWatchSmooth(uint16_t _col, uint16_t _colFill, uint16_t _colBack, uint16_t _colBackFill, boolean _always, boolean _isline, boolean _isfill)
 {
-  drawSegmentWatchNumberSmooth(0, segWatchX - 2 * segWatchShift - segmentStroke * 2  , segWatchY , c_black, _always, _isline, _isfill);
-  drawSegmentWatchNumberSmooth(1, segWatchX - 1 * segWatchShift - segmentStroke * 2  , segWatchY , c_black, _always, _isline, _isfill);
+  drawSegmentWatchNumberSmooth(0, segWatchX - 2 * segWatchShift - segmentStroke * 2  , segWatchY , _colBackFill, _always, _isline, _isfill);
+  drawSegmentWatchNumberSmooth(1, segWatchX - 1 * segWatchShift - segmentStroke * 2  , segWatchY , _colBackFill, _always, _isline, _isfill);
 
-  drawSegmentWatchNumberSmooth(2, segWatchX          + segmentStroke * 4 + segmentStroke , segWatchY , c_black, _always, _isline, _isfill);
-  drawSegmentWatchNumberSmooth(3, segWatchX + segWatchShift + segmentStroke * 4 + segmentStroke , segWatchY , c_black, _always, _isline, _isfill);
+  drawSegmentWatchNumberSmooth(2, segWatchX          + segmentStroke * 4 + segmentStroke , segWatchY , _colBackFill, _always, _isline, _isfill);
+  drawSegmentWatchNumberSmooth(3, segWatchX + segWatchShift + segmentStroke * 4 + segmentStroke , segWatchY , _colBackFill, _always, _isline, _isfill);
 
-  if (isHourChanged)
+  if (isHourChanged && segWatchAutoUpdateTime)
   {
-    setSegmentWatchSmooth(hour, minute);
+    setSegmentWatchSmooth(mytime.hour, mytime.minute);
     isHourChanged = false;
   }
 
-  if (isMinuteChanged)
+  if (isMinuteChanged && segWatchAutoUpdateTime)
   {
-    setSegmentWatchSmooth(hour, minute);
+    setSegmentWatchSmooth(mytime.hour, mytime.minute);
     isMinuteChanged = false;
   }
 
@@ -120,13 +129,11 @@ void drawSegmentWatchSmooth(uint16_t _col, uint16_t _colFill, uint16_t _colBack,
     fillRect(segWatchX - segmentStroke  + 1, segWatchY + segmentWidth + segmentStroke * 4 + 1, segmentStroke * 2 - 1, segmentStroke * 2 - 1, color(0, segWatchDotsAlphaCurrent , 0) );
   }
 
-
-
   for (int i = 0 ; i < 4; i++)
     for (int j = 0 ; j < 7; j++)
-      segWatchAlphaCurrent[i][j] += (segWatchAlphaTarget[i][j] - segWatchAlphaCurrent[i][j]) / 18;
+      segWatchAlphaCurrent[i][j] += (segWatchAlphaTarget[i][j] - segWatchAlphaCurrent[i][j]) / 10;
 
-  segWatchDotsAlphaCurrent += (255 * (second % 2) - segWatchDotsAlphaCurrent) / 18;
+  segWatchDotsAlphaCurrent += ((segWatchAutoUpdateTime)  * 255 * (mytime.second % 2) - segWatchDotsAlphaCurrent) / 10;
 
 }
 
@@ -134,12 +141,10 @@ void drawSegmentWatchNumberSmooth(uint8 _place, uint8 _x, uint8 _y, uint16_t _co
 {
   for (uint8 i = 0; i < 7; i++)
     if (segWatchAlphaTarget[_place][i] == 0)  //THE ONES WHO TURNS TO    BACK COLOR(0)
-      if (_always || abs(segWatchAlphaTarget[_place][i] - segWatchAlphaCurrent[_place][i]) > 2)
         drawSegment(i, _x , _y, color(0, floor(segWatchAlphaCurrent[_place][i]) , 0) , color(0, floor(segWatchAlphaCurrent[_place][i]) , 0) , _isline, _isfill);
 
   for (uint8 i = 0; i < 7; i++)
     if (segWatchAlphaTarget[_place][i] == 255)//THE ONES WHO TURNS TO  FILL COLOR(255)
-      if (_always || abs(segWatchAlphaTarget[_place][i] - segWatchAlphaCurrent[_place][i]) > 2)
         drawSegment(i, _x , _y, color(0, floor(segWatchAlphaCurrent[_place][i]) , 0) , color(0, floor(segWatchAlphaCurrent[_place][i]) , 0) , _isline, _isfill);
 }
 

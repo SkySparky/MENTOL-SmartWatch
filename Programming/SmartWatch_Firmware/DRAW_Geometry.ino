@@ -1,3 +1,33 @@
+void drawCircle(int x, int y, int r, uint16_t color)
+{
+    int ix = r;
+    int iy = 0;
+    int err = 1 - r;
+    
+    while(ix >= iy)
+    {
+        drawPixel(x + ix, y + iy, color);
+        drawPixel(x + iy, y + ix, color);
+        drawPixel(x - ix, y + iy, color);
+        drawPixel(x - iy, y + ix, color);
+        drawPixel(x - ix, y - iy, color);
+        drawPixel(x - iy, y - ix, color);
+        drawPixel(x + ix, y - iy, color);
+        drawPixel(x + iy, y - ix, color);
+        iy++;
+        if (err < 0)
+        {
+            err += 2 * iy + 1;
+        }
+        else
+        {
+            ix--;
+            err += 2 * (iy - ix + 1);
+        }
+    }
+}
+
+
 //////////////////////////////////////// DRAW RECTANGlE //////////////////////////////
 void drawRect(int16_t _x, int16_t _y, int16_t _w, int16_t _h,  uint16_t _col) {
 

@@ -62,6 +62,15 @@ boolean isPressed(uint8_t buttonNo)
   return false;
 }
 
+
+boolean isLongPressed(uint8_t buttonNo)
+{
+  if (buttonNo == 0 || buttonNo == 1 || buttonNo == 2)
+    return (buttons[buttonNo].state == BUTTON_LONGPRESSED);
+
+  return false;
+}
+
 boolean isReleased(uint8_t buttonNo)
 {
   if (buttonNo == 0 || buttonNo == 1 || buttonNo == 2)

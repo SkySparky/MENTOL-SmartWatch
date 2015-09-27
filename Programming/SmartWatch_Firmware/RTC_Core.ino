@@ -14,41 +14,40 @@ void rtc_loop() {
 void rtc_interrupt() {
   if ( rtc_is_second() )
   {
-    second += 1;
+    mytime.second += 1;
     isSecondChanged = true;
     
     digitalWrite(PC13,!digitalRead(PC13));
     
-    if (second > 3)
+    if (mytime.second > 3)
     {
-      second = 0;
-      minute  += 1;
+      mytime.second = 0;
+      mytime.minute  += 1;
       isMinuteChanged = true;
 
-      if (minute > 59)
+      if (mytime.minute > 59)
       {     
-        minute = 0;
-        hour  += 1;
+        mytime.minute = 0;
+        mytime.hour  += 1;
         isHourChanged = true;
 
-        if (hour > 23)
+        if (mytime.hour > 23)
         {
-          hour = 0;
-          day  += 1;
+          mytime.hour = 0;
+          mytime.day  += 1;
           isDayChanged = true;
 
-          if (day > DAYS[month])
+          if (mytime.day > DAYS[mytime.month])
           {
-            day = 0;
-            month  += 1;
+            mytime.day = 0;
+            mytime.month  += 1;
 
-            if (month > 11)
+            if (mytime.month > 11)
             {
-              month = 0;
-              year += 1;
+              mytime.month = 0;
+              mytime.year += 1;
             }
           }
-
         }
       }
     }

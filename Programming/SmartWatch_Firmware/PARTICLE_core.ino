@@ -8,12 +8,15 @@ void particleStar_init(uint8 _numParts)
   for (uint8 i = 0; i < numParticle; i++)
   {
     particleArray[i].x = random(128);
-    particleArray[i].y = random(128);
-    particleArray[i].xSpeed = 0;
-    particleArray[i].ySpeed = 0;
+    particleArray[i].y = 18 + random(110);
+
     particleArray[i].color = random(150);
-    particleArray[i].colorSpeed = floor(2.0 + random(30) / 10);
-    particleArray[i].size = 2;
+
+    particleArray[i].size = 1 + random(3);
+
+    particleArray[i].colorSpeed = random(2) + particleArray[i].size;
+    particleArray[i].xSpeed = 0.6 * (particleArray[i].size / 2);
+    particleArray[i].ySpeed = 0.2 * (particleArray[i].size / 2);
   }
 }
 
@@ -23,14 +26,38 @@ void particleStar_draw(boolean _ok)
   {
     particleArray[i].color += particleArray[i].colorSpeed;
 
-    if (particleArray[i].color > 512 && _ok)
+    particleArray[i].x += particleArray[i].xSpeed;
+    particleArray[i].y += particleArray[i].ySpeed;
+
+    if ((particleArray[i].x > 132 || particleArray[i].y > 132 || particleArray[i].color > 512) && _ok )
     {
-      particleArray[i].x = random(128);
-      particleArray[i].y = random(128);
-      particleArray[i].color = random(20);
-      particleArray[i].colorSpeed = floor(4);
+      /*
+      if (random(200) > 100)
+      {
+        particleArray[i].x = random(128);
+        particleArray[i].y = 0;
+      }
+      else
+      {
+        particleArray[i].x = 0;
+        particleArray[i].y = random(128);
+      }
+      */
+      particleArray[i].x = random(80);
+      particleArray[i].y = random(120);
+      particleArray[i].color = 100 + random(155);
+
       particleArray[i].size = 1 + random(3);
+
+      particleArray[i].colorSpeed = random(2) + particleArray[i].size;
+      particleArray[i].xSpeed = 0.6 * (particleArray[i].size / 2);
+      particleArray[i].ySpeed = 0.2 * (particleArray[i].size / 2);
+
+      if ((particleArray[i].size < 2) && (random(20) < 5))
+        particleArray[i].xSpeed *= -0.5;
     }
+
+    fillRect( particleArray[i].x - particleArray[i].xSpeed, particleArray[i].y - particleArray[i].ySpeed, particleArray[i].size, particleArray[i].size, colorBack);
 
     if (particleArray[i].color < 256)
       fillRect( particleArray[i].x, particleArray[i].y, particleArray[i].size, particleArray[i].size, colorGray(floor(particleArray[i].color)));
@@ -38,6 +65,7 @@ void particleStar_draw(boolean _ok)
       fillRect( particleArray[i].x, particleArray[i].y, particleArray[i].size, particleArray[i].size, colorGray(floor(512 - particleArray[i].color)));
   }
 }
+
 
 void particleStar_clear()
 {

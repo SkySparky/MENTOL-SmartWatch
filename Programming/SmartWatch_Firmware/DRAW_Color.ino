@@ -23,13 +23,13 @@ uint32_t pickColorWheel(int WheelPos) {
   }
 }
 
-void setColor(uint16 color) {
+void setColor(uint16_t color) {
   *dcport |=  dcpinmask;
   *csport &= ~cspinmask;
 
   SPI.write(color >> 8);
   SPI.write(color);
-
+  
   *csport |= cspinmask;
 }
 

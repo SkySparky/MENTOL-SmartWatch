@@ -40,8 +40,8 @@ void fillSegment(uint8 _num, uint8 x, uint8 y, uint16_t _col)
   else
     for (uint8 i = 0; i < segmentStroke; i++)
     {
-      drawLine(x + h * (_num == 2 || _num == 1) + i, y + 1 + i + h * (_num == 2 || _num == 4),  x + h * (_num == 2 || _num == 1) + i, y + h + h * (_num == 2 || _num == 4) - i-1, _col);
-      drawLine(x + h * (_num == 2 || _num == 1) - i, y + 1 + i + h * (_num == 2 || _num == 4),  x + h * (_num == 2 || _num == 1) - i, y + h + h * (_num == 2 || _num == 4) - i-1, _col);
+      drawLine(x + h * (_num == 2 || _num == 1) + i, y + 1 + i + h * (_num == 2 || _num == 4),  x + h * (_num == 2 || _num == 1) + i, y + h + h * (_num == 2 || _num == 4) - i - 1, _col);
+      drawLine(x + h * (_num == 2 || _num == 1) - i, y + 1 + i + h * (_num == 2 || _num == 4),  x + h * (_num == 2 || _num == 1) - i, y + h + h * (_num == 2 || _num == 4) - i - 1, _col);
     }
 }
 
@@ -113,18 +113,26 @@ void drawSegmentNumber(uint8 _num, uint8 _x, uint8 _y,  uint16_t _col, uint16_t 
 
 void drawSegmentWatchFast(uint16_t _col, uint16_t _colFill, uint16_t _colBack, uint16_t _colBackFill, boolean _always, boolean _isline, boolean _isfill)
 {
-  if (isHourChanged)              drawSegmentNumber(88  , segWatchX - 2 * segWatchShift - segmentStroke * 2 , segWatchY, _colBack, _colBackFill, _isline, _isfill);
-  if (isHourChanged ||  _always)  drawSegmentNumber(hour, segWatchX - 2 * segWatchShift - segmentStroke * 2 , segWatchY, _col, _colFill, _isline, _isfill);
-  if (isHourChanged)              isHourChanged = false;
+  if (isHourChanged) 
+  {
+    drawSegmentNumber(88  , segWatchX - 2 * segWatchShift - segmentStroke * 2 , segWatchY, _colBack, _colBackFill, _isline, _isfill);
+    drawSegmentNumber(mytime.hour, segWatchX - 2 * segWatchShift - segmentStroke * 2 , segWatchY, _col, _colFill, _isline, _isfill);
+    isHourChanged = false;
+  }
+  if (_always)  drawSegmentNumber(mytime.hour, segWatchX - 2 * segWatchShift - segmentStroke * 2 , segWatchY, _col, _colFill, _isline, _isfill);
 
-  if (isMinuteChanged)               drawSegmentNumber(88    , segWatchX + segmentStroke * 4 + segmentStroke, segWatchY, _colBack, _colBackFill, _isline, _isfill);
-  if (isMinuteChanged ||  _always)   drawSegmentNumber(minute, segWatchX + segmentStroke * 4 + segmentStroke, segWatchY, _col, _colFill, _isline, _isfill);
-  if (isMinuteChanged)               isMinuteChanged = false;
+  if (isMinuteChanged) 
+  {
+    drawSegmentNumber(88    , segWatchX + segmentStroke * 4 , segWatchY, _colBack, _colBackFill, _isline, _isfill);
+    drawSegmentNumber(mytime.minute, segWatchX + segmentStroke * 4 , segWatchY, _col, _colFill, _isline, _isfill);
+    isMinuteChanged = false;
+  }
+  if (_always) drawSegmentNumber(mytime.minute, segWatchX + segmentStroke * 4 , segWatchY, _col, _colFill, _isline, _isfill);
 
 
   if (isSecondChanged || _always)
   {
-    if (second % 2 == 0)
+    if (mytime.second % 2 == 0)
     {
       if (_isline) //FIRST: Clear the previous Second image
       {
