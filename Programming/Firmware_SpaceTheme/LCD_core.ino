@@ -2,14 +2,14 @@ void fps_control()
 {
   setCurrentFont(FONT_SMALL);
 
-  drawNumber(fpsFinal    , 0, 115, 3, ' ', colorBack);
+  drawNumber(fpsFinal    , 102, 115, 3, ' ', colorBack);
 
   deltaHedef = millis() - loopTime;
 
   delta += (deltaHedef - delta) / 20.0; //For smoothing 
   fpsFinal = (1000.0 / delta);
 
-  drawNumber(min(999,fpsFinal) ,  0, 115, 3, ' ' , (fpsFinal > 30)*c_white + (fpsFinal <= 30)*c_red);
+  drawNumber(min(999,fpsFinal) ,  102, 115, 3, ' ' , (fpsFinal > 30)*c_white + (fpsFinal <= 30)*c_red);
   //drawNumber(page+1 , 105, 0,    2, ' ' , c_blue);
 
   delay(max(0, 20 - delta));

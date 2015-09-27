@@ -4,7 +4,7 @@ void drawCornerTime()
   uint8 y = 0;
 
   alphaCornerTime += ((int)(isCornerTimeEnabled) * 255 - alphaCornerTime) / 8.0;
-  uint16_t _col = color(0, floor(alphaCornerTime), 0);
+  colorCornerTime = color(0, floor(alphaCornerTime), 0);
 
   setCurrentFont(FONT_SMALL);
 
@@ -18,7 +18,7 @@ void drawCornerTime()
   }
 
   if (alphaCornerTime > 4) {  //SECOND: Draw new Hour text
-    drawNumber(mytime.hour, x, y  , 2 , '0', _col);
+    drawNumber(mytime.hour, x, y  , 2 , '0', colorCornerTime);
   }
 
   if (isHourChanged)
@@ -34,7 +34,7 @@ void drawCornerTime()
   }
 
   if (alphaCornerTime > 4) //SECOND: Draw new Minute text
-    drawNumber(mytime.minute, x + 17, y  , 2 , '0', _col);
+    drawNumber(mytime.minute, x + 17, y  , 2 , '0', colorCornerTime);
 
   if (isMinuteChanged)
     isMinuteChanged = false; //Clear the flag
@@ -43,7 +43,7 @@ void drawCornerTime()
   if (isSecondChanged || alphaCornerTime > 4)
   {
     if (mytime.second % 2 == 0)
-      setTextColor(_col);
+      setTextColor(colorCornerTime);
     else
       setTextColor(colorBack);
 

@@ -1,6 +1,8 @@
 void themeSpaceDrawWatch()
 {
   drawSegmentWatchSmooth(color(210, 255, 255), c_green,   colorBack, colorBack, segWatchIsAlways || segWatchUpdated , true, false);
+  
+  
 }
 
 void themeSpace_init()
@@ -16,7 +18,8 @@ void themeSpace_init()
   clearScreen(c_black);
 }
 
+
 void themeSpace_loop()
 {
-
+   //drawMenuIconsList();
 }
